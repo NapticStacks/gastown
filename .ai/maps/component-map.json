@@ -1,0 +1,205 @@
+{
+  "version": "1.0",
+  "components": {
+    "cli": {
+      "path": "internal/cmd/",
+      "purpose": "User-facing command interface using Cobra",
+      "entry_points": ["internal/cmd/root.go:rootCmd"],
+      "key_files": [
+        "internal/cmd/root.go",
+        "internal/cmd/convoy.go",
+        "internal/cmd/sling.go",
+        "internal/cmd/mayor.go",
+        "internal/cmd/deacon.go",
+        "internal/cmd/polecat.go",
+        "internal/cmd/crew.go",
+        "internal/cmd/refinery.go",
+        "internal/cmd/witness.go",
+        "internal/cmd/rig.go",
+        "internal/cmd/mail.go"
+      ]
+    },
+    "rig": {
+      "path": "internal/rig/",
+      "purpose": "Project container lifecycle and configuration",
+      "entry_points": ["internal/rig/manager.go:Manager"],
+      "key_files": [
+        "internal/rig/manager.go",
+        "internal/rig/config.go",
+        "internal/rig/overlay.go",
+        "internal/rig/types.go"
+      ]
+    },
+    "polecat": {
+      "path": "internal/polecat/",
+      "purpose": "Ephemeral worker agent lifecycle",
+      "entry_points": ["internal/polecat/manager.go:Manager"],
+      "key_files": [
+        "internal/polecat/manager.go",
+        "internal/polecat/session_manager.go",
+        "internal/polecat/namepool.go",
+        "internal/polecat/types.go"
+      ]
+    },
+    "crew": {
+      "path": "internal/crew/",
+      "purpose": "Persistent worker agent lifecycle",
+      "entry_points": ["internal/crew/manager.go:Manager"],
+      "key_files": [
+        "internal/crew/manager.go",
+        "internal/crew/types.go"
+      ]
+    },
+    "witness": {
+      "path": "internal/witness/",
+      "purpose": "Per-rig polecat lifecycle manager",
+      "entry_points": ["internal/witness/manager.go:Manager"],
+      "key_files": [
+        "internal/witness/manager.go",
+        "internal/witness/protocol.go",
+        "internal/witness/types.go"
+      ]
+    },
+    "refinery": {
+      "path": "internal/refinery/",
+      "purpose": "Merge queue processor for rig",
+      "entry_points": ["internal/refinery/manager.go:Manager"],
+      "key_files": [
+        "internal/refinery/manager.go",
+        "internal/refinery/engineer.go",
+        "internal/refinery/types.go",
+        "internal/refinery/score.go"
+      ]
+    },
+    "deacon": {
+      "path": "internal/deacon/",
+      "purpose": "Background supervisor daemon (watchdog chain)",
+      "entry_points": ["internal/deacon/manager.go:Manager"],
+      "key_files": [
+        "internal/deacon/manager.go",
+        "internal/deacon/heartbeat.go",
+        "internal/deacon/stuck.go",
+        "internal/deacon/pause.go"
+      ]
+    },
+    "beads": {
+      "path": "internal/beads/",
+      "purpose": "Git-backed ledger operations",
+      "entry_points": ["internal/beads/beads.go"],
+      "key_files": [
+        "internal/beads/beads.go",
+        "internal/beads/catalog.go",
+        "internal/beads/routes.go",
+        "internal/beads/beads_types.go"
+      ]
+    },
+    "mail": {
+      "path": "internal/mail/",
+      "purpose": "Agent communication via mailboxes",
+      "entry_points": ["internal/mail/router.go", "internal/mail/mailbox.go"],
+      "key_files": [
+        "internal/mail/router.go",
+        "internal/mail/mailbox.go",
+        "internal/mail/resolve.go",
+        "internal/mail/types.go"
+      ]
+    },
+    "convoy": {
+      "path": "internal/convoy/",
+      "purpose": "Work batching observer",
+      "entry_points": ["internal/convoy/observer.go"],
+      "key_files": [
+        "internal/convoy/observer.go"
+      ]
+    },
+    "swarm": {
+      "path": "internal/swarm/",
+      "purpose": "Work batching and tracking",
+      "entry_points": ["internal/swarm/manager.go:Manager"],
+      "key_files": [
+        "internal/swarm/manager.go",
+        "internal/swarm/types.go",
+        "internal/swarm/landing.go"
+      ]
+    },
+    "templates": {
+      "path": "internal/templates/",
+      "purpose": "Role definitions and message templates",
+      "entry_points": ["internal/templates/templates.go"],
+      "key_files": [
+        "internal/templates/templates.go",
+        "internal/templates/roles/",
+        "internal/templates/messages/"
+      ]
+    },
+    "dog": {
+      "path": "internal/dog/",
+      "purpose": "Cross-rig infrastructure workers",
+      "entry_points": ["internal/dog/manager.go:Manager"],
+      "key_files": [
+        "internal/dog/manager.go"
+      ]
+    },
+    "plugin": {
+      "path": "internal/plugin/",
+      "purpose": "Extensible automation system",
+      "entry_points": ["internal/plugin/types.go"],
+      "key_files": [
+        "internal/plugin/types.go"
+      ]
+    },
+    "formula": {
+      "path": "internal/formula/",
+      "purpose": "TOML-based workflow templates",
+      "entry_points": ["internal/formula/types.go"],
+      "key_files": [
+        "internal/formula/types.go",
+        "internal/formula/formulas/"
+      ]
+    }
+  },
+  "features": {
+    "convoy": {
+      "command": "gt convoy create",
+      "implementation": "internal/cmd/convoy.go",
+      "manager": "internal/swarm/manager.go",
+      "tests": "internal/cmd/convoy_test.go"
+    },
+    "sling": {
+      "command": "gt sling",
+      "implementation": "internal/cmd/sling.go",
+      "manager": "internal/polecat/manager.go or internal/crew/manager.go",
+      "tests": "internal/cmd/sling_test.go"
+    },
+    "mayor": {
+      "command": "gt mayor attach",
+      "implementation": "internal/cmd/mayor.go",
+      "manager": "internal/mayor/manager.go",
+      "templates": "internal/templates/roles/mayor.md.tmpl"
+    },
+    "deacon": {
+      "command": "gt deacon start",
+      "implementation": "internal/cmd/deacon.go",
+      "manager": "internal/deacon/manager.go",
+      "templates": "internal/templates/roles/deacon.md.tmpl"
+    },
+    "polecat": {
+      "command": "gt polecat spawn",
+      "implementation": "internal/cmd/polecat.go",
+      "manager": "internal/polecat/manager.go",
+      "templates": "internal/templates/roles/polecat.md.tmpl"
+    },
+    "refinery": {
+      "command": "gt refinery attach",
+      "implementation": "internal/cmd/refinery.go",
+      "manager": "internal/refinery/manager.go",
+      "templates": "internal/templates/roles/refinery.md.tmpl"
+    },
+    "witness": {
+      "command": "gt witness start",
+      "implementation": "internal/cmd/witness.go",
+      "manager": "internal/witness/manager.go",
+      "templates": "internal/templates/roles/witness.md.tmpl"
+    }
+  }
+}

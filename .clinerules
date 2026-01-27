@@ -1,0 +1,42 @@
+# Claude Code Configuration for Gas Town
+
+## Context Priority
+1. `.ai/context/overview.md` - Always read first
+2. `.ai/maps/component-map.json` - For navigation
+3. `.ai/guides/common-tasks.md` - For operations
+
+## File Navigation
+Use component map at `.ai/maps/component-map.json` to find implementations quickly.
+
+## Coding Standards
+- Follow existing patterns in codebase
+- CLI commands use Cobra framework
+- Managers handle business logic
+- Types defined in `types.go` files
+- Error handling with `fmt.Errorf` and `%w` verb
+- Tests use table-driven patterns where appropriate
+
+## Testing
+- Add tests for every new feature
+- Use `*_test.go` files alongside source
+- Integration tests use `*_integration_test.go` naming
+- Test helpers in `internal/cmd/test_helpers_test.go`
+
+## Architecture Awareness
+- Two-level beads: town-level (hq-*) vs rig-level (project prefix)
+- Agent roles have distinct lifecycles (persistent vs ephemeral)
+- Work attribution via identity system
+- GUPP principle: work on hook must be executed
+
+## Common Patterns
+- Commands: `internal/cmd/<command>.go` with Cobra
+- Managers: `internal/<component>/manager.go`
+- Types: `internal/<component>/types.go`
+- Templates: `internal/templates/roles/<role>.md.tmpl`
+
+## When Adding Features
+1. Determine scope (town-level vs rig-level)
+2. Choose appropriate storage (beads vs ephemeral)
+3. Integrate with existing systems (mail, hooks, convoys)
+4. Follow patterns in `.ai/guides/adding-features.md`
+5. Update component map and documentation

@@ -1,0 +1,54 @@
+# Gas Town Codebase - AI Assistant Guide
+
+## Overview
+This is a Gas Town implementation - a multi-agent orchestration system for coordinating AI coding agents. Start with `.ai/context/overview.md`.
+
+## When Asked About
+- **Architecture**: Read `.ai/context/architecture.md`
+- **Domain terms**: Check `.ai/context/glossary.md`
+- **Specific feature**: Look up in `.ai/maps/component-map.json`
+- **Commands**: Check `internal/cmd/` and `.ai/maps/component-map.json`
+
+## When Modifying Code
+- **Adding features**: Follow `.ai/guides/adding-features.md`
+- **Common tasks**: See `.ai/guides/common-tasks.md`
+- **CLI commands**: Create in `internal/cmd/`, register in `init()`, add to command group
+- **Agent roles**: Create template in `internal/templates/roles/`, manager in `internal/<role>/`
+
+## Code Patterns
+- CLI uses Cobra framework (`internal/cmd/`)
+- Managers handle business logic (`internal/<component>/manager.go`)
+- Types defined in `types.go` files
+- Tests mirror source structure with `*_test.go` files
+- Two-level beads architecture: town-level (hq-*) vs rig-level (project prefix)
+
+## Repository Structure
+- Source code: Clean, no AI-specific comments
+- AI context: Everything in `.ai/` directory
+- Human docs: `docs/` for user-facing documentation
+- Commands: `internal/cmd/` for CLI
+- Components: `internal/<component>/` for business logic
+
+## Key Concepts
+- **Town**: Workspace root (`~/gt/`) coordinating all workers
+- **Rig**: Project container wrapping a git repository
+- **Beads**: Git-backed atomic work units (JSONL format)
+- **Convoy**: Work-order wrapping related beads
+- **Hook**: Special pinned bead for each agent (GUPP principle)
+- **Identity**: All work attributed to agents (e.g., `gastown/crew/joe`)
+
+## Agent Roles
+- **Mayor**: Town-level coordinator
+- **Deacon**: Background supervisor daemon
+- **Witness**: Per-rig polecat lifecycle manager
+- **Refinery**: Per-rig merge queue processor
+- **Polecat**: Ephemeral worker agent
+- **Crew**: Persistent worker agent
+- **Dog**: Cross-rig infrastructure worker
+
+## Important Principles
+- **GUPP**: If work is on your hook, you must run it
+- **MEOW**: Molecular Expression of Work - decompose into trackable units
+- **NDI**: Nondeterministic Idempotence - ensure eventual completion
+- **Identity**: All work must be attributed to specific agents
+- **Two-level beads**: Town-level (hq-*) for coordination, rig-level for implementation

@@ -1,0 +1,116 @@
+{
+  "domain_concepts": {
+    "town": {
+      "description": "The workspace root that coordinates all workers across multiple rigs",
+      "dsl_syntax": "~/gt/ (directory structure)",
+      "implementation": "internal/workspace/workspace.go",
+      "examples": ["Town root detection", "Rig discovery"],
+      "related": ["rig", "mayor", "deacon"]
+    },
+    "rig": {
+      "description": "A project container wrapping a git repository",
+      "dsl_syntax": "<rig>/ (directory structure)",
+      "implementation": "internal/rig/manager.go:Manager",
+      "examples": ["Rig creation", "Rig configuration"],
+      "related": ["polecat", "refinery", "witness", "crew"]
+    },
+    "bead": {
+      "description": "Git-backed atomic work unit stored as JSONL",
+      "dsl_syntax": "bead ID format: <prefix>-<id> (e.g., gt-abc12, hq-cv-xyz)",
+      "implementation": "internal/beads/beads.go",
+      "examples": ["Issue tracking", "Work items", "Convoys"],
+      "related": ["hook", "molecule", "wisp", "formula"]
+    },
+    "convoy": {
+      "description": "Work-order wrapping related beads for batch tracking",
+      "dsl_syntax": "gt convoy create <name> [bead-ids...]",
+      "implementation": "internal/swarm/manager.go:Manager",
+      "examples": ["Feature development", "Bug fixes", "Cross-rig work"],
+      "related": ["bead", "sling", "swarm"]
+    },
+    "hook": {
+      "description": "Special pinned bead for each agent - primary work queue",
+      "dsl_syntax": "Work appears on hook, agent must run it (GUPP)",
+      "implementation": "internal/beads/beads_hook.go (if exists) or beads operations",
+      "examples": ["Agent work assignment", "Work persistence"],
+      "related": ["bead", "sling", "agent"]
+    },
+    "polecat": {
+      "description": "Ephemeral worker agent that produces merge requests",
+      "dsl_syntax": "gt polecat spawn <rig>",
+      "implementation": "internal/polecat/manager.go:Manager",
+      "examples": ["Feature implementation", "Bug fixes"],
+      "related": ["witness", "refinery", "hook", "worktree"]
+    },
+    "crew": {
+      "description": "Persistent worker agent for long-lived collaboration",
+      "dsl_syntax": "gt crew add <name> --rig <rig>",
+      "implementation": "internal/crew/manager.go:Manager",
+      "examples": ["Ongoing projects", "Exploratory work"],
+      "related": ["rig", "identity", "session"]
+    },
+    "mayor": {
+      "description": "Town-level coordinator for cross-rig work",
+      "dsl_syntax": "gt mayor attach",
+      "implementation": "internal/mayor/manager.go:Manager",
+      "examples": ["Convoy creation", "Work coordination"],
+      "related": ["town", "convoy", "mail"]
+    },
+    "deacon": {
+      "description": "Background supervisor daemon running patrol cycles",
+      "dsl_syntax": "gt deacon start",
+      "implementation": "internal/deacon/manager.go:Manager",
+      "examples": ["System health monitoring", "Plugin dispatch"],
+      "related": ["dog", "patrol", "heartbeat"]
+    },
+    "witness": {
+      "description": "Per-rig polecat lifecycle manager",
+      "dsl_syntax": "gt witness start <rig>",
+      "implementation": "internal/witness/manager.go:Manager",
+      "examples": ["Polecat monitoring", "Stuck agent detection"],
+      "related": ["polecat", "rig", "patrol"]
+    },
+    "refinery": {
+      "description": "Per-rig merge queue processor",
+      "dsl_syntax": "gt refinery attach <rig>",
+      "implementation": "internal/refinery/manager.go:Manager",
+      "examples": ["MR processing", "Conflict resolution"],
+      "related": ["polecat", "rig", "merge-queue"]
+    },
+    "sling": {
+      "description": "Assigning work to agents via hooks",
+      "dsl_syntax": "gt sling <bead-id> <rig> [--agent <name>]",
+      "implementation": "internal/cmd/sling.go",
+      "examples": ["Work assignment", "Agent coordination"],
+      "related": ["hook", "bead", "polecat", "crew"]
+    },
+    "mail": {
+      "description": "Agent communication system via mailboxes",
+      "dsl_syntax": "gt mail send, gt mail check",
+      "implementation": "internal/mail/router.go, internal/mail/mailbox.go",
+      "examples": ["Agent messaging", "Work notifications"],
+      "related": ["bead", "identity", "router"]
+    },
+    "identity": {
+      "description": "Agent attribution system for all work",
+      "dsl_syntax": "<rig>/<role>/<name> (e.g., gastown/crew/joe)",
+      "implementation": "internal/session/identity.go",
+      "examples": ["Git commits", "Bead attribution", "Work tracking"],
+      "related": ["agent", "bead", "session"]
+    },
+    "formula": {
+      "description": "TOML-based workflow source template",
+      "dsl_syntax": ".beads/formulas/<name>.formula.toml",
+      "implementation": "internal/formula/types.go",
+      "examples": ["Release process", "Code review", "Deployment"],
+      "related": ["molecule", "bead", "workflow"]
+    },
+    "molecule": {
+      "description": "Durable chained bead workflows",
+      "dsl_syntax": "Multi-step process with each step as a bead",
+      "implementation": "internal/cmd/molecule.go",
+      "examples": ["Complex workflows", "Multi-step processes"],
+      "related": ["bead", "formula", "workflow"]
+    }
+  }
+}
