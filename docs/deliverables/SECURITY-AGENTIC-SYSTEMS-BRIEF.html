@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Agentic Systems Brief - Mayday Cybersecurity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --teal: #00252E;
+        --teal-mid: #003a45;
+        --coral: #E87C6B;
+        --cream: #FFFBEF;
+        --teal-light: #EAF6F6;
+        --text: #333333;
+        --graphite: #555555;
+        --white: #FFFFFF;
+        --light-gray: #E8E8E8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Sora', sans-serif;
+        color: var(--text);
+        background: var(--white);
+        line-height: 1.7;
+        font-size: 13px;
+    }
+
+    /* Cover Page */
+    .cover {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(160deg, var(--teal) 0%, var(--teal-mid) 60%, #004d5a 100%);
+        color: var(--white);
+        text-align: center;
+        padding: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cover::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(232,124,107,0.08) 0%, transparent 70%);
+    }
+
+    .cover-logo {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1rem;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        color: var(--coral);
+        margin-bottom: 2rem;
+        font-weight: 700;
+    }
+
+    .cover h1 {
+        font-family: 'Nunito', sans-serif;
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+        line-height: 1.15;
+    }
+
+    .cover h2 {
+        font-family: 'Sora', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 300;
+        color: rgba(255,255,255,0.75);
+        margin-bottom: 3rem;
+    }
+
+    .cover-divider {
+        width: 80px;
+        height: 3px;
+        background: var(--coral);
+        margin: 2rem auto;
+    }
+
+    .cover-meta {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.55);
+        line-height: 2;
+    }
+
+    .cover-meta strong {
+        color: rgba(255,255,255,0.85);
+    }
+
+    /* Table of Contents */
+    .toc {
+        padding: 3rem 4rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .toc h2 {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.8rem;
+        color: var(--teal);
+        margin-bottom: 1.5rem;
+        border-bottom: 3px solid var(--coral);
+        padding-bottom: 0.5rem;
+    }
+
+    .toc ol {
+        list-style: none;
+        counter-reset: toc-counter;
+    }
+
+    .toc ol li {
+        counter-increment: toc-counter;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .toc ol li::before {
+        content: counter(toc-counter) ".";
+        font-weight: 700;
+        color: var(--coral);
+        margin-right: 0.75rem;
+        min-width: 2rem;
+        display: inline-block;
+    }
+
+    .toc ol li a {
+        color: var(--teal);
+        text-decoration: none;
+        font-size: 1.05rem;
+        font-family: 'Sora', sans-serif;
+    }
+
+    /* Main Content */
+    .content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 4rem 4rem;
+    }
+
+    h2.section-title {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.5rem;
+        color: var(--teal);
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 3px solid var(--coral);
+    }
+
+    h3 {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.15rem;
+        color: var(--teal);
+        margin-top: 1.8rem;
+        margin-bottom: 0.6rem;
+    }
+
+    h4 {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1rem;
+        color: var(--teal);
+        margin-top: 1.2rem;
+        margin-bottom: 0.4rem;
+    }
+
+    p {
+        margin-bottom: 0.8rem;
+        color: var(--graphite);
+    }
+
+    ul, ol {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+    }
+
+    li {
+        margin-bottom: 0.3rem;
+        color: var(--graphite);
+    }
+
+    strong {
+        color: var(--teal);
+    }
+
+    a {
+        color: var(--coral);
+        text-decoration: none;
+    }
+
+    /* Stat Cards */
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .stat-card {
+        background: var(--teal-light);
+        border-radius: 8px;
+        padding: 1.2rem;
+        text-align: center;
+        border-top: 3px solid var(--coral);
+    }
+
+    .stat-card .stat-value {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--teal);
+        line-height: 1.2;
+    }
+
+    .stat-card .stat-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--graphite);
+        margin-top: 0.3rem;
+    }
+
+    /* Code */
+    code {
+        font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+        background: var(--teal-light);
+        padding: 0.1rem 0.4rem;
+        border-radius: 3px;
+        font-size: 0.85em;
+        color: var(--teal);
+    }
+
+    pre {
+        background: var(--teal);
+        color: #d4d4d4;
+        padding: 1rem 1.2rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin: 1rem 0;
+        border-left: 4px solid var(--coral);
+    }
+
+    pre code {
+        background: none;
+        color: inherit;
+        padding: 0;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    thead th {
+        background: var(--teal);
+        color: var(--white);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    tbody td {
+        padding: 0.5rem 0.8rem;
+        border-bottom: 1px solid var(--light-gray);
+        color: var(--graphite);
+    }
+
+    tbody tr:nth-child(even) {
+        background: var(--teal-light);
+    }
+
+    /* Callout Boxes */
+    .callout {
+        border-radius: 6px;
+        padding: 1rem 1.2rem;
+        margin: 1.2rem 0;
+    }
+
+    .callout-principle {
+        background: var(--teal-light);
+        border-left: 4px solid var(--coral);
+    }
+
+    .callout-principle .callout-title {
+        color: var(--teal);
+        font-family: 'Nunito', sans-serif;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+    }
+
+    .callout-teal {
+        background: var(--teal);
+        color: var(--white);
+        border-left: 4px solid var(--coral);
+    }
+
+    .callout-teal .callout-title {
+        color: var(--coral);
+        font-family: 'Nunito', sans-serif;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+    }
+
+    .callout-teal p {
+        color: rgba(255,255,255,0.8);
+    }
+
+    /* Architecture Diagram (ASCII) */
+    .diagram {
+        background: var(--teal);
+        color: var(--coral);
+        padding: 1.2rem 1.5rem;
+        border-radius: 8px;
+        font-family: 'SF Mono', monospace;
+        font-size: 0.75rem;
+        line-height: 1.4;
+        white-space: pre;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+
+    /* Pipeline flow */
+    .pipeline {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+    }
+
+    .pipeline-node {
+        background: var(--teal);
+        color: var(--white);
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 600;
+    }
+
+    .pipeline-arrow {
+        color: var(--coral);
+        font-weight: 700;
+    }
+
+    /* Separator */
+    hr {
+        border: none;
+        border-top: 2px solid var(--light-gray);
+        margin: 2rem 0;
+    }
+
+    /* Footer */
+    .doc-footer {
+        background: var(--teal);
+        color: rgba(255,255,255,0.5);
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.8rem;
+    }
+
+    .doc-footer strong {
+        color: var(--coral);
+    }
+
+    /* Print */
+    @media print {
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        body { background: white !important; margin: 0; padding: 0; }
+        .cover { page-break-after: always; page-break-inside: avoid; }
+        .page-break { page-break-before: always; }
+        .callout, table { page-break-inside: avoid; }
+        h2, h3 { page-break-after: avoid; }
+        section { page-break-inside: avoid; orphans: 3; widows: 3; }
+        p { orphans: 3; widows: 3; }
+        .stat-grid { page-break-inside: avoid; }
+        pre { page-break-inside: avoid; }
+    }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+    <div class="cover-logo">Mayday Cybersecurity</div>
+    <h1>Security Agentic<br>Systems Brief</h1>
+    <div class="cover-divider"></div>
+    <h2>Detection &bull; Triage &bull; Deception</h2>
+    <div class="cover-meta">
+        <strong>Systems:</strong> prompt-shield &bull; intelligent-defender &bull; honeypot-orchestration<br>
+        <strong>Classification:</strong> Internal &mdash; Strategic &amp; Technical<br>
+        <strong>Date:</strong> March 6, 2026<br><br>
+        Prepared by <strong>Mayday Cybersecurity</strong>
+    </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc page-break">
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#s1">Executive Summary</a></li>
+        <li><a href="#s2">Agentic Design Patterns &amp; Rationale</a></li>
+        <li><a href="#s3">System Architecture</a></li>
+        <li><a href="#s4">Integration Flow</a></li>
+        <li><a href="#s5">Prompt Injection Defense</a></li>
+        <li><a href="#s6">External Input Scanning Architecture</a></li>
+        <li><a href="#s7">Key Differentiators</a></li>
+    </ol>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- SECTION 1 -->
+<h2 class="section-title page-break" id="s1">1. Executive Summary</h2>
+
+<p>Mayday operates three LangGraph-based security agents that form a closed-loop <strong>detection, triage, and deception</strong> pipeline:</p>
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-value">prompt-shield</div>
+        <div class="stat-label">5-Layer Defense-in-Depth</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">intelligent-defender</div>
+        <div class="stat-label">SOC Automation (1:300)</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">honeypot-orchestration</div>
+        <div class="stat-label">Multi-Cloud Deception</div>
+    </div>
+</div>
+
+<p><strong>prompt-shield</strong> &mdash; Defense-in-depth middleware that scans all input to and output from AI agents for prompt injection attacks, PII leakage, and behavioral anomalies. Operates as a sidecar/middleware layer wrapping every deployed agent.</p>
+
+<p><strong>intelligent-defender</strong> &mdash; SOC coordinator that ingests security events from CloudWatch, GuardDuty, Splunk, and SIEM feeds; correlates against threat intelligence; triages alerts with severity scoring; executes automated containment; and dispatches deception tasks.</p>
+
+<p><strong>honeypot-orchestration</strong> &mdash; Multi-cloud deception agent that analyzes architecture via AppAcuity risk diagrams and deploys honeypots across AWS, O365, and Google Workspace. Monitors interactions and generates actionable intelligence.</p>
+
+<div class="callout callout-principle">
+    <div class="callout-title">Closed-Loop Architecture</div>
+    <p>prompt-shield <strong>detects</strong> threats at the agent boundary, intelligent-defender <strong>triages and responds</strong>, and honeypot-orchestration <strong>deploys deception infrastructure</strong> to gather intelligence on attacker behavior. Canary token fires feed directly into intelligent-defender as CRITICAL alerts, which can trigger automated honeypot deployment near the affected resource.</p>
+</div>
+
+<p>All three systems are built on LangGraph <code>StateGraph</code> with typed state, deterministic node execution, and checkpointing &mdash; chosen specifically for the auditability and reproducibility requirements of security operations.</p>
+
+<!-- SECTION 2 -->
+<h2 class="section-title page-break" id="s2">2. Agentic Design Patterns &amp; Rationale</h2>
+
+<h3>2.1 StateGraph &mdash; Deterministic Node Execution</h3>
+<p>All three agents use <code>langgraph.graph.StateGraph</code> as their orchestration primitive, chosen over autonomous agent loops (e.g., ReAct with unconstrained tool use) for security-critical reasons:</p>
+<ul>
+    <li><strong>Deterministic execution order.</strong> Each node fires in a defined sequence. In intelligent-defender: <code>log_ingestion &rarr; threat_correlator &rarr; alert_triager &rarr; responder &rarr; reporter &rarr; deception_coordinator</code>.</li>
+    <li><strong>Typed state.</strong> Every piece of data flowing through the graph is defined as a <code>TypedDict</code> with explicit fields and types, making it auditable and testable.</li>
+    <li><strong>Checkpointing.</strong> LangGraph's built-in checkpointing records every state transition, enabling forensic reconstruction of any security decision.</li>
+</ul>
+
+<h3>2.2 Parallel Fan-Out / Fan-In</h3>
+<ul>
+    <li><strong>prompt-shield IngressGate</strong> runs three scanners in parallel (<code>MLClassifier</code>, <code>RegexScanner</code>, <code>PerplexityChecker</code>), then merges scores into a single <code>ScanResult</code>. A failing ML classifier does not block the regex scanner from catching a known signature.</li>
+    <li><strong>honeypot-orchestration</strong> fans out deployment across three platforms (AWS, O365, GWS) via conditional routing, then converges at the <code>monitor</code> node.</li>
+</ul>
+
+<h3>2.3 Conditional Routing</h3>
+<p>honeypot-orchestration uses conditional edges to skip platforms with no pending deployments. intelligent-defender uses severity-based routing: events scoring below the threshold (default 30) are dropped entirely.</p>
+
+<h3>2.4 Typed State Accumulation</h3>
+<p>Each system defines a rich <code>TypedDict</code> state that grows through nodes:</p>
+<table>
+    <thead><tr><th>System</th><th>State Flow</th></tr></thead>
+    <tbody>
+        <tr><td><strong>intelligent-defender</strong></td><td>SecurityEvent[] &rarr; ThreatIndicator[] &rarr; Alert[] &rarr; ResponseAction[] &rarr; DeceptionTask[] &rarr; IncidentReport[]</td></tr>
+        <tr><td><strong>honeypot-orchestration</strong></td><td>AppAcuityDiagram &rarr; PlacementRecommendation[] &rarr; HoneypotDeployment[] &rarr; ThreatEvent[] &rarr; ActionableIntelligence[]</td></tr>
+        <tr><td><strong>prompt-shield</strong></td><td>Messages &rarr; {ML, Regex, Perplexity} &rarr; AggregatedScores &rarr; PolicyDecision (ALLOW|WARN|BLOCK|ESCALATE)</td></tr>
+    </tbody>
+</table>
+
+<h3>2.5 Defense-in-Depth Layering</h3>
+<p>prompt-shield implements 5 sequential defense layers, each independent:</p>
+<table>
+    <thead><tr><th>Layer</th><th>Name</th><th>Function</th><th>Scanner</th></tr></thead>
+    <tbody>
+        <tr><td>1</td><td><strong>Ingress Gate</strong></td><td>Pre-LLM input scanning</td><td>MLClassifier, RegexScanner, PerplexityChecker</td></tr>
+        <tr><td>2</td><td><strong>System Hardening</strong></td><td>Constrain agent behavior</td><td>NeMo Guardrails Colang rules (planned)</td></tr>
+        <tr><td>3</td><td><strong>Canary Tokens</strong></td><td>Zero false-positive breach detection</td><td>CanaryManager + CanaryScanner via canari-llm</td></tr>
+        <tr><td>4</td><td><strong>Egress Gate</strong></td><td>Post-LLM output + tool call scanning</td><td>PIIScanner, CanaryScanner, ToolWhitelistValidator</td></tr>
+        <tr><td>5</td><td><strong>Privilege Enforcement</strong></td><td>Least-privilege per tool</td><td>SecurityProfile tool whitelists + rate limits</td></tr>
+    </tbody>
+</table>
+
+<div class="callout callout-teal">
+    <div class="callout-title">Design Principle</div>
+    <p>"Perfect prevention is impossible" (OWASP). Optimize for fast detection and response. No single layer is sufficient.</p>
+</div>
+
+<h3>2.6 Closed-Loop Feedback</h3>
+<div class="pipeline">
+    <span class="pipeline-node">prompt-shield DETECTS</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">intelligent-defender TRIAGES</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">honeypot-orchestration DEPLOYS</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">ThreatEvent FEEDS BACK</span>
+</div>
+
+<h3>2.7 Human-in-the-Loop Gates</h3>
+<ul>
+    <li><strong>intelligent-defender:</strong> Containment actions (block IP, isolate instance, revoke credentials) are recorded with status <code>"pending"</code> for human approval by default.</li>
+    <li><strong>honeypot-orchestration:</strong> <code>SecurityGuardrails</code> requires human approval for <code>MODIFY_INFRA</code>, <code>DESTROY</code>, or <code>CREDENTIAL_OP</code> actions.</li>
+    <li><strong>prompt-shield:</strong> <code>ESCALATE</code> action routes alerts to human SOC analysts via Slack and PagerDuty.</li>
+</ul>
+
+<h3>2.8 Security-as-Code Profiles</h3>
+<p>Per-agent YAML security profiles loaded by <code>ProfileLoader</code> specify scanner thresholds, tool whitelists, canary token configuration, default actions, escalation channels, and rate limits. These are version-controlled alongside application code and reviewed in PRs.</p>
+
+<!-- SECTION 3 -->
+<h2 class="section-title page-break" id="s3">3. System Architecture</h2>
+
+<h3>3.1 prompt-shield: 5-Layer Defense-in-Depth</h3>
+
+<table>
+    <thead><tr><th>Component</th><th>Status</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td><strong>RegexScanner</strong></td><td style="color: #16a34a;">Implemented</td><td>8 patterns: ignore_instructions, system_override, DAN jailbreak, role_hijack, instruction_injection, base64_payload, data_exfil_request, encoding_evasion</td></tr>
+        <tr><td><strong>SecurityProfile / ProfileLoader</strong></td><td style="color: #16a34a;">Implemented</td><td>YAML loading, per-agent profile configuration</td></tr>
+        <tr><td><strong>AlertPayload</strong></td><td style="color: #16a34a;">Implemented</td><td>Pydantic model for SOC webhook payloads</td></tr>
+        <tr><td>MLClassifier</td><td>Phase 1</td><td>Guardrails AI PromptInjection validator wrapper</td></tr>
+        <tr><td>PerplexityChecker</td><td>Phase 2</td><td>Adversarial suffix detection via token distribution</td></tr>
+        <tr><td>PIIScanner</td><td>Phase 2</td><td>8 PII/secret types via Guardrails AI</td></tr>
+        <tr><td>IngressGate / EgressGate</td><td>Scaffolded</td><td>Parallel scanner coordination</td></tr>
+        <tr><td>CanaryManager</td><td>Scaffolded</td><td>Token generation, injection, rotation via canari-llm</td></tr>
+        <tr><td>PolicyEngine</td><td>Scaffolded</td><td>Score aggregation against SecurityProfile thresholds</td></tr>
+    </tbody>
+</table>
+
+<h3>3.2 honeypot-orchestration: Multi-Cloud Deception</h3>
+
+<div class="pipeline">
+    <span class="pipeline-node">placement_analyzer</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">aws_deployer</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">o365_deployer</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">gws_deployer</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">monitor</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">alert_respond</span>
+</div>
+
+<p><strong>Security Guardrails (fully implemented):</strong> Input validation (credential detection, platform allowlisting, per-run deployment limits), action authorization (5 severity levels with human approval gates), rate limiting, output sanitization, tamper-evident SHA-256 audit entries, and credential isolation via AWS Secrets Manager.</p>
+
+<h3>3.3 intelligent-defender: SOC Automation</h3>
+
+<p><strong>Scale target:</strong> 1 operator managing 300 nodes</p>
+
+<div class="pipeline">
+    <span class="pipeline-node">log_ingestion</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">threat_correlator</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">alert_triager</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">responder</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">reporter</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">deception_coordinator</span>
+</div>
+
+<p><strong>Alert scoring (implemented):</strong> Base scores: critical=90, high=70, medium=40, low=15. +20 boost if source IP matches known-malicious from threat indicators. Events below threshold (default 30) are dropped. Score &ge;80 = critical, &ge;60 = high, &ge;40 = medium, else low.</p>
+
+<!-- SECTION 4 -->
+<h2 class="section-title page-break" id="s4">4. Integration Flow</h2>
+
+<h3>4.1 Detection-to-Deception Pipeline</h3>
+
+<div class="callout callout-principle">
+    <div class="callout-title">End-to-End Flow</div>
+    <p><strong>1.</strong> prompt-shield detects injection (canary fire, regex match, ML classification)<br>
+    <strong>2.</strong> AlertPayload dispatched to intelligent-defender webhook<br>
+    <strong>3.</strong> intelligent-defender ingests, correlates CTI, scores alert, executes containment<br>
+    <strong>4.</strong> deception_coordinator dispatches to honeypot-orchestration<br>
+    <strong>5.</strong> Honeypots deployed near affected resources<br>
+    <strong>6.</strong> ThreatEvent from honeypot interaction feeds back to intelligent-defender<br>
+    <strong>7.</strong> prompt-shield updates scanning profiles based on new threat intel</p>
+</div>
+
+<h3>4.2 Canary Token Fire Scenario</h3>
+
+<ol>
+    <li>prompt-shield <strong>EgressGate</strong> detects canary token in LLM output via <code>CanaryScanner</code></li>
+    <li><code>PolicyEngine</code> evaluates: canary fire = automatic <code>ESCALATE</code> (confidence: 1.0, zero false positives)</li>
+    <li><code>AlertPayload</code> generated with <code>severity: "CRITICAL"</code>, <code>detection_layer: "canary"</code></li>
+    <li>Alert dispatched to: intelligent-defender webhook, Slack #security-alerts, PagerDuty</li>
+    <li>intelligent-defender scores event at 90+ (critical base + CTI correlation)</li>
+    <li>Responder executes containment: blocks session/IP, triggers credential rotation</li>
+    <li>deception_coordinator dispatches honeypot deployment near affected resource</li>
+    <li>Honeypots gather intelligence on attacker's lateral movement</li>
+</ol>
+
+<h3>4.3 Alert Payload Contract</h3>
+<pre><code>class AlertPayload(BaseModel):
+    event_type: str = "prompt_injection_detected"
+    timestamp: datetime
+    severity: str           # LOW, MEDIUM, HIGH, CRITICAL
+    agent_id: str
+    detection_layer: str    # ingress, egress, canary
+    detection_details: DetectionDetails
+    context: AlertContext
+    recommended_action: str</code></pre>
+
+<!-- SECTION 5 -->
+<h2 class="section-title page-break" id="s5">5. Prompt Injection Defense</h2>
+
+<h3>5.1 Threat Landscape</h3>
+<p>Prompt injection is the <strong>#1 threat</strong> to LLM applications per OWASP LLM01:2025, appearing in over 73% of LLM security assessments. OWASP states: "it is unclear if there are fool-proof methods of prevention." This makes defense-in-depth the only viable strategy.</p>
+
+<h3>5.2 Threat Categories</h3>
+<table>
+    <thead><tr><th>ID</th><th>Threat</th><th>Severity</th><th>MITRE ATLAS</th></tr></thead>
+    <tbody>
+        <tr><td><strong>T1</strong></td><td>Direct Prompt Injection &mdash; override system instructions</td><td style="color: #dc2626;">CRITICAL</td><td>AML.T0051.000</td></tr>
+        <tr><td><strong>T2</strong></td><td>Indirect Prompt Injection &mdash; malicious instructions in external data</td><td style="color: #dc2626;">CRITICAL</td><td>AML.T0051.001</td></tr>
+        <tr><td><strong>T3</strong></td><td>AI-Induced Lateral Movement (AILM) &mdash; injection propagates via shared data</td><td style="color: #dc2626;">CRITICAL</td><td>&mdash;</td></tr>
+        <tr><td><strong>T4</strong></td><td>Tool Abuse via Injection &mdash; coerce agent into dangerous tool calls</td><td style="color: #dc2626;">CRITICAL</td><td>&mdash;</td></tr>
+        <tr><td><strong>T5</strong></td><td>Multi-Agent Propagation &mdash; injection in one agent's output infects another</td><td style="color: #ea580c;">HIGH</td><td>&mdash;</td></tr>
+        <tr><td><strong>T6</strong></td><td>Multimodal Injection &mdash; hidden instructions in images, PDFs</td><td style="color: #ca8a04;">MEDIUM</td><td>&mdash;</td></tr>
+    </tbody>
+</table>
+
+<h3>5.3 Implementation Roadmap</h3>
+<table>
+    <thead><tr><th>Phase</th><th>Timeline</th><th>Goal</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Phase 1: Foundation</strong></td><td>Weeks 1-3</td><td>Basic input scanning + canary tokens. LangGraph scaffolding, Guardrails AI, canari-llm, regex scanner, YAML profiles.</td></tr>
+        <tr><td><strong>Phase 2: Output Monitoring</strong></td><td>Weeks 4-6</td><td>Post-LLM scanning + CI/CD gates. Tool whitelist validator, PII scanner, Garak in CI, NeMo Guardrails.</td></tr>
+        <tr><td><strong>Phase 3: Observability</strong></td><td>Weeks 7-9</td><td>Full SOC dashboard + automated response. Prometheus, Grafana, OpenTelemetry, alert routing, PagerDuty.</td></tr>
+        <tr><td><strong>Phase 4: Advanced</strong></td><td>Weeks 10-12</td><td>Custom ML + red-team validation. Custom classifier, AILM correlation, secondary guard model.</td></tr>
+        <tr><td><strong>Phase 5: Continuous</strong></td><td>Ongoing</td><td>Monthly Garak red-team, quarterly ML retraining, 30-day canary rotation, OWASP/MITRE tracking.</td></tr>
+    </tbody>
+</table>
+
+<p><strong>Current status:</strong> Phase 1 in progress. RegexScanner (8 patterns), SecurityProfile/ProfileLoader (YAML), and AlertPayload (Pydantic) are implemented. Remaining components scaffolded with typed interfaces.</p>
+
+<!-- SECTION 6 -->
+<h2 class="section-title page-break" id="s6">6. External Input Scanning Architecture</h2>
+
+<h3>6.1 IngressGate as Universal Middleware</h3>
+<p>Every external input &mdash; webhooks, email ingestion, CRM triggers, customer chat &mdash; passes through the <code>IngressGate</code> before any data reaches an LLM. The IngressGate coordinates parallel scanner execution and returns a single <code>ScanResult</code> with an <code>Action</code> decision.</p>
+
+<h3>6.2 Integration Patterns</h3>
+
+<h4>LangGraph Native Middleware</h4>
+<pre><code>agent = create_react_agent(
+    model=model,
+    tools=tools,
+    middleware=[
+        prompt_shield_ingress_middleware,
+        prompt_shield_egress_middleware,
+        canary_token_middleware,
+    ],
+)</code></pre>
+
+<h4>Decorator Pattern</h4>
+<pre><code>@shield_middleware
+async def my_node(state, config):
+    ...  # pre-LLM scan + post-LLM scan wrapped automatically</code></pre>
+
+<h4>FastAPI / Lambda Middleware</h4>
+<pre><code>shield = ShieldPipeline.from_config("shield-config.yaml")
+result = await shield.scan_ingress(messages=..., agent_id=...)
+if result.action == "BLOCK":
+    return shield.blocked_response(result)</code></pre>
+
+<h3>6.3 Scanner Inventory</h3>
+<table>
+    <thead><tr><th>Scanner</th><th>Type</th><th>Status</th></tr></thead>
+    <tbody>
+        <tr><td><strong>RegexScanner</strong></td><td>8 compiled patterns (CRITICAL to MEDIUM severity)</td><td style="color: #16a34a;">Implemented</td></tr>
+        <tr><td><strong>MLClassifier</strong></td><td>DeBERTa/DistilBERT fine-tuned (90-95% detection, 5-50ms)</td><td>Phase 1</td></tr>
+        <tr><td><strong>PerplexityChecker</strong></td><td>Token distribution anomaly detection for adversarial suffixes</td><td>Phase 2</td></tr>
+        <tr><td><strong>PIIScanner</strong></td><td>8 PII/secret types (email, phone, SSN, API keys, etc.)</td><td>Phase 2</td></tr>
+        <tr><td><strong>CanaryScanner</strong></td><td>Zero false-positive exact match (canari-llm, 30-day rotation)</td><td>Phase 1</td></tr>
+        <tr><td><strong>ToolWhitelistValidator</strong></td><td>Per-agent tool name + parameter constraint validation</td><td>Phase 2</td></tr>
+    </tbody>
+</table>
+
+<h3>6.4 Canary Token Architecture</h3>
+<ol>
+    <li><strong>Generation:</strong> canari-llm creates deterministic fake secrets (API keys, AWS keys, emails) that look authentic</li>
+    <li><strong>Injection:</strong> Embedded into agent system prompts &mdash; the LLM sees them as legitimate secrets</li>
+    <li><strong>Scanning:</strong> EgressGate checks every LLM output for exact token matches &mdash; any match is a <strong>zero false-positive</strong> signal</li>
+    <li><strong>Alerting:</strong> Canary fires trigger CRITICAL alerts via webhook + PagerDuty</li>
+    <li><strong>Rotation:</strong> Tokens rotate every 30 days (configurable per profile)</li>
+    <li><strong>Forensics:</strong> All activity stored in local SQLite and forwarded to DynamoDB</li>
+</ol>
+
+<h3>6.5 Policy Engine</h3>
+<ul>
+    <li><strong>Any canary fire:</strong> Automatic <code>ESCALATE</code> (confidence 1.0)</li>
+    <li><strong>CRITICAL regex match:</strong> Automatic <code>BLOCK</code></li>
+    <li><strong>ML above threshold:</strong> <code>BLOCK</code> or <code>ESCALATE</code> per profile</li>
+    <li><strong>Multiple MEDIUM detections:</strong> Weighted aggregation can trigger <code>WARN</code> or <code>BLOCK</code></li>
+    <li><strong>Below all thresholds:</strong> <code>ALLOW</code></li>
+</ul>
+
+<!-- SECTION 7 -->
+<h2 class="section-title page-break" id="s7">7. Key Differentiators</h2>
+
+<div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="stat-card">
+        <div class="stat-value" style="font-size: 1.2rem;">Zero False-Positive Detection</div>
+        <div class="stat-label">Canary tokens provide mathematically zero false-positive breach detection</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" style="font-size: 1.2rem;">Guardrails from Day 1</div>
+        <div class="stat-label">AI security baked in before any deployment node is written</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" style="font-size: 1.2rem;">Security-as-Code</div>
+        <div class="stat-label">YAML profiles, tool whitelists, and Colang rules in version control</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" style="font-size: 1.2rem;">Deterministic Auditability</div>
+        <div class="stat-label">StateGraph + checkpointing = full forensic reconstruction</div>
+    </div>
+</div>
+
+<div class="callout callout-teal">
+    <div class="callout-title">Founding Design Principle</div>
+    <p>"Automation without security is dangerous. Security without automation is exhausting." &mdash; Every agent gets shield coverage. No exceptions. Every security decision is logged, traced, and metriced. Changes to security posture go through the same code review process as application changes.</p>
+</div>
+
+<h3>Closed-Loop Intelligence</h3>
+<p>Unlike standalone detection or response tools, the three-agent pipeline creates a self-reinforcing intelligence cycle. Attacks detected by prompt-shield generate threat indicators that improve intelligent-defender's CTI correlation, which drives honeypot placement that captures attacker TTPs, which feeds back into prompt-shield's scanning profiles. Each iteration sharpens the defensive posture.</p>
+
+<hr>
+
+<div class="callout callout-principle">
+    <div class="callout-title">Design Principles</div>
+    <ol style="margin-top: 0.5rem;">
+        <li><strong>"Automation without security is dangerous."</strong> Every agent gets shield coverage.</li>
+        <li><strong>Zero-trust agents.</strong> Treat every LLM as a potentially compromised endpoint.</li>
+        <li><strong>Defense in depth.</strong> Stack ML classifiers, canary tokens, tool validation, and behavioral monitoring.</li>
+        <li><strong>Least privilege always.</strong> Tool call whitelists enforced by shield, not by the agent itself.</li>
+        <li><strong>Detection over prevention.</strong> Perfect prevention is impossible. Optimize for fast detection.</li>
+        <li><strong>Observable by default.</strong> Every shield decision is logged, traced, and metriced.</li>
+        <li><strong>Security as code.</strong> Profiles, whitelists, and rails are version-controlled and PR-reviewed.</li>
+    </ol>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+    <strong>Mayday Cybersecurity</strong> &mdash; Help is on the way.<br>
+    Confidential &mdash; Internal Use Only &mdash; March 2026
+</div>
+
+</body>
+</html>
