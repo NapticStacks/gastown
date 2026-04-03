@@ -366,7 +366,7 @@ func runSling(cmd *cobra.Command, args []string) error {
 		}
 
 		// Unhook the bead from old owner (set status back to open)
-		unhookCmd := exec.Command("bd", "--no-daemon", "update", beadID, "--status=open", "--assignee=")
+		unhookCmd := exec.Command("bd", "update", beadID, "--status=open", "--assignee=")
 		unhookCmd.Dir = beads.ResolveHookDir(townRoot, beadID, "")
 		if err := unhookCmd.Run(); err != nil {
 			fmt.Printf("%s Could not unhook bead from old owner: %v\n", style.Dim.Render("Warning:"), err)
@@ -459,7 +459,7 @@ func runSling(cmd *cobra.Command, args []string) error {
 
 	// Hook the bead using bd update.
 	// See: https://github.com/steveyegge/gastown/issues/148
-	hookCmd := exec.Command("bd", "--no-daemon", "update", beadID, "--status=hooked", "--assignee="+targetAgent)
+	hookCmd := exec.Command("bd", "update", beadID, "--status=hooked", "--assignee="+targetAgent)
 	hookCmd.Dir = beads.ResolveHookDir(townRoot, beadID, hookWorkDir)
 	hookCmd.Stderr = os.Stderr
 	if err := hookCmd.Run(); err != nil {
